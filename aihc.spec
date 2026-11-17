@@ -1,16 +1,19 @@
 %define debug_package %{nil}
 
+%global forgeurl https://github.com/ai-haskell-compiler/aihc
+%global version0 0.2.0
+%global commit ddbee0c4077391713e38750ad12999c1f65a41a6
+%forgemeta
+
 Name:           aihc
-Version:        0.1.0
-Release:        0.3%{?dist}
+Version:        %{forgeversion -p}
+Release:        0.1%{?dist}
 Summary:        AI Haskell Compiler
 
 License:        Unlicense
-URL:            https://github.com/ai-haskell-compiler/aihc
-Source0:        https://github.com/ai-haskell-compiler/aihc/archive/refs/tags/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
+URL:            https://docs.aihc.app/
+Source0:        %{forgesource}
 Source1:        aihc.sh
-# https://github.com/ai-haskell-compiler/aihc/pull/3321
-Patch0:         https://patch-diff.githubusercontent.com/raw/ai-haskell-compiler/aihc/pull/3321.patch
 
 BuildRequires:  cabal-install
 # for check
@@ -26,7 +29,8 @@ to LLVM IR, and to WebAssembly.
 
 
 %prep
-%autosetup -p1
+%forgesetup
+# %%autopatch -p1
 
 
 %build
@@ -36,7 +40,7 @@ cabal build -w %{_bindir}/ghc-9.12 exe:aihc
 
 %install
 mkdir -p %{buildroot}%{_libexecdir}
-strip -s -o %{buildroot}%{_libexecdir}/aihc dist-newstyle/build/%{_arch}-linux/ghc-9.12.4/aihc-%{version}/x/aihc/build/aihc/aihc
+strip -s -o %{buildroot}%{_libexecdir}/aihc dist-newstyle/build/%{_arch}-linux/ghc-9.12.4/aihc-%{version0}/x/aihc/build/aihc/aihc
 
 %global aihc_datadir %{_datadir}/aihc
 mkdir -p %{buildroot}%{aihc_datadir}/
@@ -59,6 +63,9 @@ install -p %{SOURCE1} %{buildroot}%{_bindir}/aihc
 
 
 %changelog
+* Tue Nov 17 2026 Jens Petersen <petersen@redhat.com> - %{forgeversion -p}-0.1
+- update to 0.2-pre snapshot using forge macros
+
 * Tue Nov 17 2026 Jens Petersen <petersen@redhat.com> - 0.1.0-0.3
 - check needs clang
 - include core-libs
