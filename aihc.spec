@@ -2,12 +2,12 @@
 
 %global forgeurl https://github.com/ai-haskell-compiler/aihc
 %global version0 0.2.0
-%global commit ddbee0c4077391713e38750ad12999c1f65a41a6
+# %%global commit ddbee0c4077391713e38750ad12999c1f65a41a6
 %forgemeta
 
 Name:           aihc
 Version:        %{forgeversion -p}
-Release:        0.1%{?dist}
+Release:        1%{?dist}
 Summary:        AI Haskell Compiler
 
 License:        Unlicense
@@ -66,6 +66,9 @@ install -p %{SOURCE1} %{buildroot}%{_bindir}/aihc
 
 
 %changelog
+* Tue Nov 17 2026 Jens Petersen <petersen@redhat.com> - 0.2.0-1
+- update to 0.2.0
+
 * Tue Nov 17 2026 Jens Petersen <petersen@redhat.com> - 0.2.0~20261117gitddbee0c-0.1
 - update to 0.2-pre snapshot using forge macros
 
