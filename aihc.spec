@@ -50,7 +50,10 @@ mkdir -p %{buildroot}%{_bindir}
 install -p %{SOURCE1} %{buildroot}%{_bindir}/aihc
 
 %check
-%{buildroot}%{_libexecdir}/aihc build examples/hello-world/Main.hs -o hello-world
+%ifnarch x86_64
+%define target --target llvm
+%endif
+%{buildroot}%{_libexecdir}/aihc build %{?target} examples/hello-world/Main.hs -o hello-world
 ./hello-world
 
 
@@ -63,7 +66,7 @@ install -p %{SOURCE1} %{buildroot}%{_bindir}/aihc
 
 
 %changelog
-* Tue Nov 17 2026 Jens Petersen <petersen@redhat.com> - %{forgeversion -p}-0.1
+* Tue Nov 17 2026 Jens Petersen <petersen@redhat.com> - 0.2.0~20261117gitddbee0c-0.1
 - update to 0.2-pre snapshot using forge macros
 
 * Tue Nov 17 2026 Jens Petersen <petersen@redhat.com> - 0.1.0-0.3
